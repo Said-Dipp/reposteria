@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Producto extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'cliente';
+    protected $table = 'producto';
 
     /**
     * The database primary key value.
@@ -25,7 +25,7 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'direccion', 'telefono', 'celular', 'num_aux', 'email', 'password', 'tipo'];
+    protected $fillable = ['nombre', 'costo', 'cantidad', 'descripcion', 'duracion', 'categoria_producto_id'];
 
     
 }

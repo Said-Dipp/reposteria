@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
@@ -48,11 +49,25 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $request->all();
+
+        $v = \Validator::make($requestData, [
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'int',
+            'celular' => 'int',
+            'num_aux' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'tipo' => 'required|string|max:255',
+        ]);
+ 
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
         
         Cliente::create($requestData);
-
         return redirect('admin/cliente')->with('flash_message', 'Cliente added!');
     }
 
@@ -97,6 +112,22 @@ class ClienteController extends Controller
         
         $requestData = $request->all();
         
+        $v = \Validator::make($requestData, [
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'int',
+            'celular' => 'int',
+            'num_aux' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'tipo' => 'required|string|max:255',
+        ]);
+ 
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+
         $cliente = Cliente::findOrFail($id);
         $cliente->update($requestData);
 
