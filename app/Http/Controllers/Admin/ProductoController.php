@@ -122,4 +122,10 @@ class ProductoController extends Controller
 
         return redirect('admin/producto')->with('flash_message', 'Producto deleted!');
     }
+    /**
+     * Funcion para mostrar todos los productos por api rest
+     */
+    public function showApi(){
+        return Producto::all();
+    }
 }

@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth', 'administrador']) ->group(function (){
     Route::resource('admin/categoriaproducto', 'CategoriaProductoController');
     Route::resource('admin/cliente', 'ClienteController');
+    Route::resource('admin/producto', 'Admin\\ProductoController');
+    Route::resource('admin/pedido', 'Admin\\PedidoController');
 });
 
-Route::resource('admin/producto', 'Admin\\ProductoController');
