@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Pedido;
+use App\Promocion;
 use Illuminate\Http\Request;
 
-class PedidoController extends Controller
+class PromocionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,20 +21,17 @@ class PedidoController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $pedido = Pedido::where('saldo', 'LIKE', "%$keyword%")
-                ->orWhere('estado', 'LIKE', "%$keyword%")
+            $promocion = Promocion::where('descuento', 'LIKE', "%$keyword%")
                 ->orWhere('fecha', 'LIKE', "%$keyword%")
-                ->orWhere('fecha_entrega', 'LIKE', "%$keyword%")
-                ->orWhere('hora_entrega', 'LIKE', "%$keyword%")
-                ->orWhere('forma_de_pago', 'LIKE', "%$keyword%")
-                ->orWhere('iva', 'LIKE', "%$keyword%")
-                ->orWhere('cliente_id', 'LIKE', "%$keyword%")
+                ->orWhere('duracion', 'LIKE', "%$keyword%")
+                ->orWhere('estado', 'LIKE', "%$keyword%")
+                ->orWhere('producto_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $pedido = Pedido::latest()->paginate($perPage);
+            $promocion = Promocion::latest()->paginate($perPage);
         }
 
-        return view('admin.pedido.index', compact('pedido'));
+        return view('admin.promocion.index', compact('promocion'));
     }
 
     /**
@@ -44,7 +41,7 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        return view('admin.pedido.create');
+        return view('admin.promocion.create');
     }
 
     /**
@@ -60,24 +57,22 @@ class PedidoController extends Controller
         $requestData = $request->all();
         
         $v = \Validator::make($requestData, [
-            'saldo' => 'required|between:0,99.99',
-            'estado' => 'required|string|max:255',
+            'descuento' => 'required|between:0,99.99',
             'fecha' => 'required|date_format:Y-m-d',
-            'fecha_entrega' => 'required|date_format:Y-m-d',
-            'hora_entrega' => 'required',
-            'forma_de_pago' => 'required|string|max:255',
-            'iva' => 'required|between:0,99.99',
-            'cliente_id' => 'required|string|max:255',
+            'duracion' => 'required||string|max:255',
+            'estado' => 'required|string|max:255',
+            'producto_id' => 'required|string|max:255',
+
         ]);
  
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
+        
+        Promocion::create($requestData);
 
-        Pedido::create($requestData);
-
-        return redirect('admin/pedido')->with('flash_message', 'Pedido added!');
+        return redirect('admin/promocion')->with('flash_message', 'Promocion added!');
     }
 
     /**
@@ -89,9 +84,9 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        $pedido = Pedido::findOrFail($id);
+        $promocion = Promocion::findOrFail($id);
 
-        return view('admin.pedido.show', compact('pedido'));
+        return view('admin.promocion.show', compact('promocion'));
     }
 
     /**
@@ -103,9 +98,9 @@ class PedidoController extends Controller
      */
     public function edit($id)
     {
-        $pedido = Pedido::findOrFail($id);
+        $promocion = Promocion::findOrFail($id);
 
-        return view('admin.pedido.edit', compact('pedido'));
+        return view('admin.promocion.edit', compact('promocion'));
     }
 
     /**
@@ -121,26 +116,24 @@ class PedidoController extends Controller
         
         $requestData = $request->all();
         
-         $v = \Validator::make($requestData, [
-            'saldo' => 'required',
-            'estado' => 'required|string|max:255',
+        $v = \Validator::make($requestData, [
+            'descuento' => 'required|between:0,99.99',
             'fecha' => 'required|date_format:Y-m-d',
-            'fecha_entrega' => 'required|date_format:Y-m-d',
-            'hora_entrega' => 'required',
-            'forma_de_pago' => 'required|string|max:255',
-            'iva' => 'required',
-            'cliente_id' => 'required|string|max:255',
+            'duracion' => 'required||string|max:255',
+            'estado' => 'required|string|max:255',
+            'producto_id' => 'required|string|max:255',
+
         ]);
  
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
+        
+        $promocion = Promocion::findOrFail($id);
+        $promocion->update($requestData);
 
-        $pedido = Pedido::findOrFail($id);
-        $pedido->update($requestData);
-
-        return redirect('admin/pedido')->with('flash_message', 'Pedido updated!');
+        return redirect('admin/promocion')->with('flash_message', 'Promocion updated!');
     }
 
     /**
@@ -152,8 +145,8 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {
-        Pedido::destroy($id);
+        Promocion::destroy($id);
 
-        return redirect('admin/pedido')->with('flash_message', 'Pedido deleted!');
+        return redirect('admin/promocion')->with('flash_message', 'Promocion deleted!');
     }
 }

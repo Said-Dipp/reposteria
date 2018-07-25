@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model
+class Promocion extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'pedido';
+    protected $table = 'promocion';
 
     /**
     * The database primary key value.
@@ -25,7 +25,7 @@ class Pedido extends Model
      *
      * @var array
      */
-    protected $fillable = ['saldo', 'estado', 'fecha', 'fecha_entrega', 'hora_entrega', 'forma_de_pago', 'iva', 'cliente_id'];
+    protected $fillable = ['descuento', 'fecha', 'duracion', 'estado', 'producto_id'];
 
     
 }

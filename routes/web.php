@@ -24,5 +24,11 @@ Route::middleware(['auth', 'administrador']) ->group(function (){
     Route::resource('admin/cliente', 'ClienteController');
     Route::resource('admin/producto', 'Admin\\ProductoController');
     Route::resource('admin/pedido', 'Admin\\PedidoController');
+    Route::resource('admin/promocion', 'Admin\\PromocionController');
 });
 
+
+
+
+Route::resource('admin/venta', 'Admin\\VentaController');
+Route::resource('admin/preparado', 'Admin\\PreparadoController');

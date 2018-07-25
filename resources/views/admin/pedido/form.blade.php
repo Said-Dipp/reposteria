@@ -14,11 +14,11 @@
 </select>
         {!! $errors->first('estado', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('fecha_hora') ? 'has-error' : ''}}">
-    <label for="fecha_hora" class="col-md-4 control-label">{{ 'Fecha Hora' }}</label>
+</div><div class="form-group {{ $errors->has('fecha') ? 'has-error' : ''}}">
+    <label for="fecha" class="col-md-4 control-label">{{ 'Fecha' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="fecha_hora" format="yyyy/MM/dd" type="datetime-local" id="fecha_hora" value="{{ $pedido->fecha_hora or ''}}" >
-        {!! $errors->first('fecha_hora', '<p class="help-block">:message</p>') !!}
+        <input class="form-control" name="fecha" format="yyyy/MM/dd" type="date" id="fecha" value="{{ $pedido->fecha or ''}}" >
+        {!! $errors->first('fecha', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('fecha_entrega') ? 'has-error' : ''}}">
     <label for="fecha_entrega" class="col-md-4 control-label">{{ 'Fecha Entrega' }}</label>
@@ -29,7 +29,7 @@
 </div><div class="form-group {{ $errors->has('hora_entrega') ? 'has-error' : ''}}">
     <label for="hora_entrega" class="col-md-4 control-label">{{ 'Hora Entrega' }}</label>
     <div class="col-md-6">
-        <input class="form-control" name="hora_entrega" type="time" id="hora_entrega" value="{{ $pedido->hora_entrega or ''}}" >
+        <input class="form-control" name="hora_entrega" format="H:i:s:" type="time" id="hora_entrega" value="{{ $pedido->hora_entrega or ''}}" >
         {!! $errors->first('hora_entrega', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('forma_de_pago') ? 'has-error' : ''}}">
