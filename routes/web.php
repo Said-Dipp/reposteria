@@ -12,14 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
+    
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth', 'administrador']) ->group(function (){
+/**
+ * middleware para los que estan autentificados
+ */
+Route::middleware(['auth']) ->group(function (){
+    Route::resource('admin/producto', 'Admin\\ProductoController');
+});
+
+/**
+ * middleware para los qu estan autentificados y que tienen el rol adminsitrador
+ */
+Route::middleware(['auth', 'rol:administrador']) ->group(function (){
     Route::resource('admin/categoriaproducto', 'CategoriaProductoController');
     Route::resource('admin/cliente', 'ClienteController');
     Route::resource('admin/producto', 'Admin\\ProductoController');
@@ -27,8 +38,21 @@ Route::middleware(['auth', 'administrador']) ->group(function (){
     Route::resource('admin/promocion', 'Admin\\PromocionController');
 });
 
+/**
+ * middleware para los que estan autentificados y que tienen el rol vendedor
+ */
+Route::middleware(['auth', 'rol:vendedor']) ->group(function (){
+    Route::resource('vendedor/promocion', 'Admin\\PromocionController');
+    Route::resource('admin/venta', 'Admin\\VentaController');
+    
+});
+
+/**
+ * middleware para los qu estan autentificados y que tienen el rol panadero
+ */
+Route::middleware(['auth', 'rol:panadero']) ->group(function (){
+    Route::resource('admin/preparado', 'Admin\\PreparadoController');
+});
 
 
 
-Route::resource('admin/venta', 'Admin\\VentaController');
-Route::resource('admin/preparado', 'Admin\\PreparadoController');

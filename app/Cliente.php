@@ -1,11 +1,17 @@
 <?php
 
 namespace App;
-
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Cliente extends Model
+class Cliente extends Authenticatable
 {
+    use Notifiable;
+    use HasApiTokens;
+
+     protected $guard = 'api';
     /**
      * The database table used by the model.
      *

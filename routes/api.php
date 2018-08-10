@@ -19,8 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', 'Api\UserController@login');
+/**registrar cliente */
+Route::post('cliente/registrar', 'Api\ClienteController@register');
 
-Route::group(['middleware' => 'auth:api'], function(){
+/**login de liente */
+Route::post('cliente/login', 'Api\ClienteController@login');
+
+// Route::group(['middleware' => 'auth:api'], function(){
+
+Route::middleware(['auth:api'])->group(function (){
     Route::post('details', 'Api\UserController@details');
     Route::get('producto', 'Admin\ProductoController@showApi');
 });
