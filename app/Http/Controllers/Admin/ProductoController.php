@@ -126,6 +126,7 @@ class ProductoController extends Controller
      * Funcion para mostrar todos los productos por api rest
      */
     public function showApi(){
+        header('Access-Control-Allow-Origin: *');
         return Producto::all();
     }
 }

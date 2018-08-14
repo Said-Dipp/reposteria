@@ -26,7 +26,7 @@ Route::post('cliente/registrar', 'Api\ClienteController@register');
 Route::post('cliente/login', 'Api\ClienteController@login');
 
 // Route::group(['middleware' => 'auth:api'], function(){
-
+Route::post('pedido', 'Admin\PedidoController@apiListpedidos');
 Route::middleware(['auth:api'])->group(function (){
     Route::post('details', 'Api\UserController@details');
     Route::get('producto', 'Admin\ProductoController@showApi');

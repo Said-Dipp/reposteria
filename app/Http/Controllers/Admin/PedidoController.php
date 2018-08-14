@@ -156,4 +156,8 @@ class PedidoController extends Controller
 
         return redirect('admin/pedido')->with('flash_message', 'Pedido deleted!');
     }
+    public function apiListpedidos (){
+        header('Access-Control-Allow-Origin: *');
+        return Pedido::all();
+    }
 }

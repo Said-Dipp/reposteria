@@ -17,12 +17,12 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p>RNOVA &copy; 2017-2019</p>
+                                    <p>El Amor es dulce&copy; 2018-2019</p>
                                 </div>
                                 <div class="col-sm-6 text-right">
                                     <p>
                                         Design by 
-                                        <a href="#" class="external">RNOVA</a>
+                                        <a href="#" class="external">SAID</a>
                                     </p>
                                 </div>
                             </div>
