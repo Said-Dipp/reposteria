@@ -15,33 +15,34 @@ public $successStatus = 200;
      * @return \Illuminate\Http\Response 
      */ 
     public function login(Request $request){ 
-        header('Acces-Control-Allow-Origin: *');
-if (Auth::Attempt(['email' => request ('email'), 'password' => request(password)])) {
-        $user = Auth::user();
-        $success['token'] = "mi_aplicacion_said123"
-        $success['cliente_id'] = $user->id;
-        return response()->json($success, $this->successStatus);
-}
-else {
-    return response()->json(['error'=>'Unauthorised'], 401);
-}
-          // if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-        // $credentials = $request->only('email', 'password');
-          // if( Auth::guard('cliente')->attempt($credentials) ){ 
+    //     header('Acces-Control-Allow-Origin: *');
+    // if (Auth::Attempt(['email' => request ('email'), 'password' => request(password)])) {
+    //         $user = Auth::user();
+    //         $success['token'] = "mi_aplicacion_said123"
+    //         $success['cliente_id'] = $user->id;
+    //         return response()->json($success, $this->successStatus);
+    // }
+    // else {
+    //     return response()->json(['error'=>'Unauthorised'], 401);
+    // }
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
+        $credentials = $request->only('email', 'password');
+        //   if( Auth::guard('cliente')->attempt($credentials) ){ 
         // $cliente = null;
-           // $cliente = Cliente::where('email', $credentials['email'])->where('password', bcrypt($credentials['password']) )->first();
-           // return bcrypt($credentials['password']);
+        //    $cliente = Cliente::where('email', $credentials['email'])->where('password', bcrypt($credentials['password']) )->first();
+           return bcrypt($credentials['password']);
         // $cliente = Cliente::where('email', $credentials['email'])->first();
-           // return $cliente;
-        // if( $cliente != null ){ 
-        //     // $cliente = Auth::cliente(); 
-        //     $success['token'] =  $cliente->createToken('MyApp')-> accessToken; 
-        //     return response()->json(['success' => $success], $this-> successStatus); 
-        // } 
-        // else{ 
-        //     return response()->json(['error'=>'Unauthorised'], 401); 
-        // } 
+        //    return $cliente;
+        if( $cliente != null ){ 
+            $cliente = Auth::cliente(); 
+            $success['token'] =  $cliente->createToken('MyApp')-> accessToken; 
+            return response()->json(['success' => $success], $this-> successStatus); 
+        } 
+        else{ 
+            return response()->json(['error'=>'Unauthorised'], 401); 
+        } 
     }
+}
 
     /** 
      * Register api 
