@@ -23,15 +23,26 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="producto" class="col-md-4 control-label">Nombre Cliente:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txt_search" placeholder="Buscar cliente...">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-secondary" type="button" onclick="buscar_cliente();">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <input type="hidden" name="cliente_id" id="cliente_id" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente_nombre" class="col-md-4 control-label">Nombre Cliente:</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" name="cliente_name" type="text" id="" value="" >
+                                    <input class="form-control" name="cliente_nombre" id="cliente_nombre" type="text" id="" value="" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="producto" class="col-md-4 control-label">CI Cliente:</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" name="cliente_ci" type="text" id="" value="" >
+                                    <input class="form-control" name="cliente_ci" id="cliente_ci" type="text" id="" value="" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,5 +148,31 @@
         var descuento_ = $("#descuento").val();
         var total_importe_ = parseFloat(total_) - parseFloat(descuento_);
         $("#total_importe").val(total_importe_.toFixed(2));
+    }
+
+    function buscar_cliente(){
+        var ci = $("#txt_search").val();
+        if (ci) {
+            $.ajax({
+                method: "POST",
+                url: "/admin/cliente/searchByCi",
+                data: { ci: ci, _token: "{{ csrf_token() }}", },
+                success: function(result) {
+                    if (result.cliente) {
+                        $("#cliente_nombre").val(result.cliente.nombre);
+                        $("#cliente_ci").val(result.cliente.ci);
+                        $("#cliente_id").val(result.cliente.id);
+                    }
+                    else {
+                        $("#cliente_nombre").val("");
+                        $("#cliente_ci").val("");
+                        $("#cliente_id").val("");
+                    }
+                },
+                error: function() {
+                    console.log("No se ha podido obtener la información");
+                }
+            });
+        }
     }
 </script>

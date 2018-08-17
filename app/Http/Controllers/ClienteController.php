@@ -81,7 +81,7 @@ class ClienteController extends Controller
     public function show($id)
     {
         $cliente = Cliente::findOrFail($id);
-
+        dd($cliente);
         return view('cliente.cliente.show', compact('cliente'));
     }
 
@@ -146,5 +146,10 @@ class ClienteController extends Controller
         Cliente::destroy($id);
 
         return redirect('admin/cliente')->with('flash_message', 'Cliente deleted!');
+    }
+
+    public function searchByCi(Request $request){
+        $cliente = Cliente::where('ci', '=', $request->ci)->first();
+        return response()->json(['cliente' => $cliente]);
     }
 }

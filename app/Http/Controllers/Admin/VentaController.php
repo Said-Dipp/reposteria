@@ -66,9 +66,14 @@ class VentaController extends Controller
             DB::beginTransaction();
             // insertamos un cliente si no existe
             $cliente = new Cliente;
-            $cliente->nombre = $request->cliente_name;
-            $cliente->ci = $request->cliente_ci;
-            $cliente->save();
+            if ($request->has('cliente_id')) {
+                $cliente->id = $request->cliente_id;
+            }
+            else {
+                $cliente->nombre = $request->cliente_nombre;
+                $cliente->ci = $request->cliente_ci;
+                $cliente->save();
+            }
             // insertamos la venta
             $venta = new Venta;
             $venta->fecha = date("Y-m-d");
@@ -92,10 +97,10 @@ class VentaController extends Controller
                 $detalle_venta->save();
             }
             DB::commit();
-            return redirect('admin/venta')->with('flash_message', 'Venta added!');
+            return redirect('admin/venta');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect('admin/venta/create')->with('flash_message', 'Venta added!');
+            return redirect('admin/venta/create');
         }
     }
 
