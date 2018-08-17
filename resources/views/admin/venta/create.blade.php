@@ -97,7 +97,7 @@
                 <td>"+producto+"</td>\
                 <td><input type='number' class='form-control' name='cantidad["+producto_id+"]' style='width:100px;' min='0' value='1' onchange='calcular_subtotal("+id+");'></td>\
                 <td>"+costo+"</td>\
-                <td><input type='text' class='form-control' name='subtotal["+producto_id+"]' style='width:120px;' readonly></td>\
+                <td><input type='text' class='form-control' name='subtotal["+producto_id+"]' style='width:120px;' value='"+costo+"' readonly></td>\
             </tr>\
             ");
         calcular_total();

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class His_cantidad extends Model
+class HistorialCantidad extends Model
 {
     /**
      * The database table used by the model.
