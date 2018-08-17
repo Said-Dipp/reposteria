@@ -37,6 +37,7 @@ INSERT INTO `categoria_producto` (`id`, `nombre`, `created_at`, `updated_at`, `i
 CREATE TABLE IF NOT EXISTS `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
+  `ci` varchar(45) DEFAULT NULL,
   `direccion` varchar(45) DEFAULT NULL,
   `telefono` int(11) DEFAULT NULL,
   `celular` int(11) DEFAULT NULL,
@@ -49,11 +50,11 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 
 -- Volcando datos para la tabla db_negocio.cliente: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` (`id`, `nombre`, `direccion`, `telefono`, `celular`, `email`, `tipo`, `created_at`, `updated_at`) VALUES
-	(1, 'dss', 'sdfsd', 2423, 234, 'asd@asd.com', 'comun', '2018-06-15 18:56:19', '2018-06-15 18:56:19'),
-	(2, 'ssssss', 'adsdsa', 2342, 432, 'wer@wer.com', 'frecuente', '2018-06-15 18:57:23', '2018-06-15 19:36:25'),
-	(3, 'charito', 'fwegweg', 1241515, 1254125, 'samir@hotmail.com', 'frecuente', '2018-06-15 19:22:40', '2018-06-15 19:29:11'),
-	(6, 'juan', 'dsfsdfds', 4567, 675, 'juan@juan.com', 'comun', '2018-07-31 18:24:00', '2018-07-31 18:24:00');
+INSERT INTO `cliente` (`id`, `nombre`, `ci`, `direccion`, `telefono`, `celular`, `email`, `tipo`, `created_at`, `updated_at`) VALUES
+	(1, 'dss', NULL, 'sdfsd', 2423, 234, 'asd@asd.com', 'comun', '2018-06-15 18:56:19', '2018-06-15 18:56:19'),
+	(2, 'ssssss', NULL, 'adsdsa', 2342, 432, 'wer@wer.com', 'frecuente', '2018-06-15 18:57:23', '2018-06-15 19:36:25'),
+	(3, 'charito', NULL, 'fwegweg', 1241515, 1254125, 'samir@hotmail.com', 'frecuente', '2018-06-15 19:22:40', '2018-06-15 19:29:11'),
+	(6, 'juan', NULL, 'dsfsdfds', 4567, 675, 'juan@juan.com', 'comun', '2018-07-31 18:24:00', '2018-07-31 18:24:00');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_negocio.detalle_pedido
@@ -80,14 +81,15 @@ CREATE TABLE IF NOT EXISTS `detalle_pedido` (
 CREATE TABLE IF NOT EXISTS `detalle_venta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cantidad` decimal(10,0) DEFAULT NULL,
+  `subtotal` double DEFAULT NULL,
   `venta_id` int(11) NOT NULL,
-  `promocion_id` int(11) DEFAULT NULL,
+  `producto_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_detalle_venta_venta1_idx` (`venta_id`),
-  KEY `fk_detalle_venta_promocion1_idx` (`promocion_id`),
-  CONSTRAINT `fk_detalle_venta_promocion1` FOREIGN KEY (`promocion_id`) REFERENCES `promocion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_detalle_venta_producto1_idx` (`producto_id`),
+  CONSTRAINT `fk_detalle_venta_producto1` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_venta_venta1` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -209,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla db_negocio.oauth_personal_access_clients: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_negocio.oauth_personal_access_clients: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
 INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2018-06-28 18:16:33', '2018-06-28 18:16:33');
@@ -315,13 +317,14 @@ CREATE TABLE IF NOT EXISTS `producto` (
   PRIMARY KEY (`id`),
   KEY `fk_producto_categoria_producto1_idx` (`categoria_producto_id`),
   CONSTRAINT `fk_producto_categoria_producto1` FOREIGN KEY (`categoria_producto_id`) REFERENCES `categoria_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla db_negocio.producto: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla db_negocio.producto: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`id`, `nombre`, `costo`, `cantidad`, `descripcion`, `duracion`, `categoria_producto_id`, `created_at`, `updated_at`, `imagen`) VALUES
 	(1, 'chuntero', 20.30, 8, 'fdsfds', 2, 2, '2018-06-15 20:17:48', '2018-07-25 19:35:48', NULL),
-	(2, 'empanadas', 2.50, 32, 'agdgrutu', 2, 1, '2018-07-19 19:50:46', '2018-07-25 19:29:05', NULL);
+	(2, 'empanadas', 2.50, 32, 'agdgrutu', 2, 1, '2018-07-19 19:50:46', '2018-07-25 19:29:05', NULL),
+	(3, 'torta tres leches', 210.00, 10, NULL, 5, 1, '2018-08-17 13:16:24', '2018-08-17 13:16:24', NULL);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_negocio.promocion
@@ -362,19 +365,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `rol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- Volcando datos para la tabla db_negocio.users: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `direccion`, `telefono`, `celular`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `rol`) VALUES
-	(1, 'admin', 'nose', 23422, 324324, 'admin@admin.com', '$2y$10$XHNiWCcsSw0CMI//DjD5NelCB7o8eoVg5DphbqGcnPbrRm5PisDCO', 'Iz40B1pLRzm7t4gUI3eQPcCZysRSFyUlxgZoVZfbThBvhwjuJnRlAJzq5omg', '2018-06-08 19:59:30', '2018-06-08 19:59:30', 'administrador'),
+	(1, 'admin', 'nose', 23422, 324324, 'admin@admin.com', '$2y$10$XHNiWCcsSw0CMI//DjD5NelCB7o8eoVg5DphbqGcnPbrRm5PisDCO', '8FPjehSm0KrkjmNxoeY7vYF1SGHI3t9IIK3R6MN476aojCu8yq4SC4HsVYI9', '2018-06-08 19:59:30', '2018-06-08 19:59:30', 'administrador'),
 	(2, 'said', 'asdas dsad sas dasd', 234, 234, 'saiddipp@hotmail.com', '$2y$10$unoELXeQi.jZbXNSVj4W2.iNl9PfBpEhcSMqXnSwmbEGByb6oPbBe', 'cJXkk7IFsoC4A1aRQyJgV0skBHSADOdDZdMAJHPGp878PnW1ILmRIfUxH2he', '2018-06-08 20:10:41', '2018-06-08 20:10:41', 'administrador'),
 	(3, 'gerardo', 'zona norte', 44493245, 78785423, 'gerarld@gmail.com', '$2y$10$b4ln2FA7cc2DxiOjx.k.OOS.W66z14OSpnl7BQ9aChNz5X/RGmD0m', 'FR96JLi7bzCyDys9TDnLYu5xdyZNLd0bUiYP7UJbUUttPUL3pW4KSRDUSOVF', '2018-06-12 15:09:24', '2018-06-12 15:09:24', 'administrador'),
 	(4, 'said', 'pacata', 354, 654654, 'said.dipp@rnova.net', '$2y$10$0Liw5R6t0ZRr.1s9E3hBN.1tTY6672On7HADwQPWCKuCWC.Kv6pgC', NULL, '2018-06-15 20:00:07', '2018-06-15 20:00:07', 'administrador'),
 	(5, 'roberto', 'askjfhasjkf', 124115, 334536, 'roberto@gmail.com', '$2y$10$Me0xzo/7u6zw3tZ0JvzWg.UfUzS2qpZ6S.z1dnJo1xycb2TgSbPGK', 'noWbyESlrtJMro0jXbiHpWueRElpTJGmYYg8X2SN15voRoSGNeTUKm6WBzIh', '2018-06-18 15:59:15', '2018-06-18 15:59:15', 'administrador'),
 	(6, 'said', 'zsfagf', 1231515, 534636, 'saiddipp@hotmail.comsaid', '$2y$10$Fh2FMIdmyJUwFACsjW/f7uCbRHs0rqVkYG7Z8dmLJsqASEOMIq9Hu', NULL, '2018-06-18 16:00:43', '2018-06-18 16:00:43', 'administrador'),
 	(7, 'dipp', 'dasrar', 12124, 4124125, 'said@gmail.com', '$2y$10$IZkyNCMuQlNsbAlzAQXcUep9A2HnLEyPLtxoJCU7R3xDFcsJ56Xcy', 'BnX3aVXfk62J82WSf9OBoWGvhycXSs7DCSyvU2aFomUPQTY5jLH5Pgby4Tyy', '2018-08-10 16:02:20', '2018-08-10 16:02:20', 'panadero'),
-	(8, 'willam', 'dsadsa', 3454, 435435, 'willam@mamani.com', '$2y$10$Ey9qzjgnEK4KiLTrty7DNeDWhz7k.ycgD8tjSUHp.hnfIrUkuHTIK', '0uzAco7v11ZGucljlTPEHx7szdgxjPpNQSya11hYCvoeZo9qiPaqByw2gjN0', '2018-08-10 22:19:37', '2018-08-10 22:19:37', 'panadero');
+	(8, 'willam', 'dsadsa', 3454, 435435, 'willam@mamani.com', '$2y$10$Ey9qzjgnEK4KiLTrty7DNeDWhz7k.ycgD8tjSUHp.hnfIrUkuHTIK', '0uzAco7v11ZGucljlTPEHx7szdgxjPpNQSya11hYCvoeZo9qiPaqByw2gjN0', '2018-08-10 22:19:37', '2018-08-10 22:19:37', 'panadero'),
+	(9, 'vendedor', 'sin dir', 4444444, 77777777, 'vendedor@rnova.net', '$2y$10$aVV3hfQXMc5DDBIQZKV9guicUMsJZBKlmqpWYwjhc9Ulw/FJvHFiK', NULL, '2018-08-17 13:23:01', '2018-08-17 13:23:01', 'vendedor');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_negocio.venta

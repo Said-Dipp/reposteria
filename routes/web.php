@@ -44,6 +44,7 @@ Route::middleware(['auth', 'rol:administrador']) ->group(function (){
 Route::middleware(['auth', 'rol:vendedor']) ->group(function (){
     Route::resource('vendedor/promocion', 'Admin\\PromocionController');
     Route::resource('admin/venta', 'Admin\\VentaController');
+    Route::resource('admin/cliente', 'ClienteController');
     
 });
 

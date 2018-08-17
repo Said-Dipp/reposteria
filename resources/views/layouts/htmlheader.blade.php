@@ -12,7 +12,7 @@
 <!-- Bootstrap CSS-->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Font Awesome CSS-->
-<link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+<!-- <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"> -->
 <!-- Google fonts - Roboto -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 <!-- jQuery Circle-->

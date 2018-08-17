@@ -4,13 +4,15 @@
         <input class="form-control" name="fecha" type="date" id="fecha" value="{{ $ventum->fecha or ''}}" >
         {!! $errors->first('fecha', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('hora') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('hora') ? 'has-error' : ''}}">
     <label for="hora" class="col-md-4 control-label">{{ 'Hora' }}</label>
     <div class="col-md-6">
         <input class="form-control" name="hora" type="time" id="hora" value="{{ $ventum->hora or ''}}" >
         {!! $errors->first('hora', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('total') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('total') ? 'has-error' : ''}}">
     <label for="total" class="col-md-4 control-label">{{ 'Total' }}</label>
     <div class="col-md-6">
         <input class="form-control" name="total" type="number" id="total" value="{{ $ventum->total or ''}}" >

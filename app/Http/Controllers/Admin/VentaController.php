@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Venta;
+use App\Producto;
+use App\Cliente;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -45,7 +47,8 @@ class VentaController extends Controller
      */
     public function create()
     {
-        return view('admin.venta.create');
+        $productos = Producto::get();
+        return view('admin.venta.create', compact('productos'));
     }
 
     /**
@@ -57,12 +60,13 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
+        // aqui guardar los datos
+        dd($request);
+        // $requestData = $request->all();
         
-        $requestData = $request->all();
-        
-        Ventum::create($requestData);
+        // Venta::create($requestData);
 
-        return redirect('admin/venta')->with('flash_message', 'Ventum added!');
+        return redirect('admin/venta')->with('flash_message', 'Venta added!');
     }
 
     /**

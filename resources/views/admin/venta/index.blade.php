@@ -3,14 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+            
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Venta</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/venta/create') }}" class="btn btn-success btn-sm" title="Add New Ventum">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                        <a href="{{ url('/admin/venta/create') }}" class="btn btn-success btn-sm" title="Add New Sale">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Sale
                         </a>
 
                         <form method="GET" action="{{ url('/admin/venta') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
