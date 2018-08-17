@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="producto" class="col-md-4 control-label">CI Cliente:</label>
+                                <label for="cliente_ci" class="col-md-4 control-label">CI Cliente:</label>
                                 <div class="col-md-6">
                                     <input class="form-control" name="cliente_ci" id="cliente_ci" type="text" id="" value="" >
                                 </div>
@@ -95,23 +95,30 @@
             </div>
         </div>
     </div>
+
 @endsection
 <script type="text/javascript">
     function agregar(){
         var producto_id = $('#producto').val();
         var producto = $("#producto option:selected").text()
         var costo = $("#producto option:selected").data("price");
-        var id = "item"+producto_id;
-        $('#lista_pedido').append("\
-            <tr id='"+id+"'>\
-                <td>X</td>\
-                <td>"+producto+"</td>\
-                <td><input type='number' class='form-control' name='cantidad["+producto_id+"]' style='width:100px;' min='0' value='1' onchange='calcular_subtotal("+id+");'></td>\
-                <td>"+costo+"</td>\
-                <td><input type='text' class='form-control' name='subtotal["+producto_id+"]' style='width:120px;' value='"+costo+"' readonly></td>\
-            </tr>\
-            ");
-        calcular_total();
+        var item = "item"+producto_id;
+        if($("#"+item).length == 0) {
+            // no existe el id
+            $('#lista_pedido').append("\
+                <tr id='"+item+"'>\
+                    <td><button type='button' onclick='eliminar_item("+item+");' class='btn btn-danger'>X</button></td>\
+                    <td>"+producto+"</td>\
+                    <td><input type='number' class='form-control' name='cantidad["+producto_id+"]' style='width:100px;' min='0' value='1' onchange='calcular_subtotal("+item+");'></td>\
+                    <td>"+costo+"</td>\
+                    <td><input type='text' class='form-control' name='subtotal["+producto_id+"]' style='width:120px;' value='"+costo+"' readonly></td>\
+                </tr>\
+                ");
+            calcular_total();
+        }
+        else {
+            alert("El producto ya esta en la lista!!!");
+        }
     }
     function calcular_subtotal(item){
         var cantidad = $($($(item).find("td"))[2]).find("input").val();
@@ -165,7 +172,7 @@
                     }
                     else {
                         $("#cliente_nombre").val("");
-                        $("#cliente_ci").val("");
+                        $("#cliente_ci").val(ci);
                         $("#cliente_id").val("");
                     }
                 },
@@ -174,5 +181,10 @@
                 }
             });
         }
+    }
+
+    function eliminar_item(item){
+        $(item).remove();
+        calcular_total();
     }
 </script>
