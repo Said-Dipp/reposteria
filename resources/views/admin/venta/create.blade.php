@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <a href="{{ url('/admin/venta') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
 
-                        <form method="POST" action="{{ url('/admin/venta') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('/admin/venta') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" onsubmit="return validar_formulario();">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -109,7 +109,7 @@
                 <tr id='"+item+"'>\
                     <td><button type='button' onclick='eliminar_item("+item+");' class='btn btn-danger'>X</button></td>\
                     <td>"+producto+"</td>\
-                    <td><input type='number' class='form-control' name='cantidad["+producto_id+"]' style='width:100px;' min='0' value='1' onchange='calcular_subtotal("+item+");'></td>\
+                    <td><input type='number' class='form-control' name='cantidad["+producto_id+"]' style='width:100px;' min='1' value='1' onchange='calcular_subtotal("+item+");'></td>\
                     <td>"+costo+"</td>\
                     <td><input type='text' class='form-control' name='subtotal["+producto_id+"]' style='width:120px;' value='"+costo+"' readonly></td>\
                 </tr>\
@@ -187,4 +187,23 @@
         $(item).remove();
         calcular_total();
     }
+    function validar_formulario(){
+        var res = false;
+        if ($("#cliente_id").val() == "" && $("#cliente_ci").val() == "") {
+            res = false;
+            // mostrar errores, cliente no seleccionado
+        }
+        else {
+            res = true;
+        }
+        if ($("#lista_pedido").find("tr").length == 0) {
+            res = false;
+            // mostrar errores, lista vacia de pedidos
+        }
+        else {
+            res = true;
+        }
+        return res;
+    }
+    
 </script>
